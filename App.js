@@ -10,12 +10,13 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
   Text,
   TextInput,
   Dimensions,
 } from 'react-native';
 import Voice from 'react-native-voice';
+import { NeuButton, NeuView } from "neumorphism-ui";
+
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
@@ -54,68 +55,57 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-        <TextInput
-          autoFocus={false}
-          value={inputValue}
-          style={styles.input}
-          textAlignVertical="top"
-          placeholder="Start recording..."
-          multiline
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.btn, isRecording && styles.btnRecording]}
-            activeOpacity={0.7}
-            onPress={isRecording ? this.handleStopRecording : this.handleStartRecording}
-          >
-            <Text style={styles.btnLabel}>
-              {isRecording ? 'STOP' : 'RECORD'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <NeuView pressed style={styles.inputWrapper}>
+          <TextInput
+            autoFocus={false}
+            value={inputValue}
+            style={styles.input}
+            textAlignVertical="top"
+            placeholder="Start recording and dictating..."
+            multiline
+          />
+        </NeuView>
+        <NeuButton style={styles.button}
+          onPress={this.handleStartRecording}
+          onUnpress={this.handleStopRecording}
+        >
+          <Text style={styles.btnLabel}>
+          {isRecording ? 'STOP' : 'RECORD'}
+        </Text>
+      </NeuButton>
+    </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'flex-end',
-    backgroundColor: '#fff',
+    height: '100%',
+    paddingVertical: 50,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    backgroundColor:'#e0e5ec'
   },
-  input: {
-    backgroundColor: '#f5f5f5',
-    marginTop: 20,
+  button: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: 'center',
+  },
+  inputWrapper: {
     marginBottom: 'auto',
     height: WINDOW_HEIGHT / 3,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'lightgray',
-    padding: 10,
-    color: 'gray',
+  },
+  input: {
+    width: '90%',
+    backgroundColor: 'rgba(0,0,0,0)',
+    height: '90%',
+    margin: 20,
+    padding: 20,
+    color: 'rgba(0,0,0,0.7)',
     fontSize: 15,
   },
   btnLabel: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  btn: {
-    backgroundColor: '#4caf50',
-    alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    shadowOpacity: 0.6,
-    elevation: 6,
-    shadowColor: '#444',
-    shadowRadius: 2,
-    shadowOffset: {
-        height: 2,
-    },
-  },
-  btnRecording: {
-    backgroundColor: '#f44336',
+    opacity: 0.7,
   },
 });
