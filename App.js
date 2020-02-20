@@ -1,12 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,67 +7,48 @@ import {
   Dimensions,
 } from 'react-native';
 import Voice from 'react-native-voice';
-import { NeuButton, NeuView } from "neumorphism-ui";
-
+import {NeuButton, NeuView} from "neumorphism-ui";
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-export default class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isRecording: false,
-      inputValue: '',
-    };
-        
-    Voice.onSpeechStart = this.onSpeechStart.bind(this)
-    Voice.onSpeechResults = this.onSpeechResults.bind(this) 
-  }
+const App = () => {
+  const [isRecording, setRecording] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
-  onSpeechStart() {
-    this.setState({isRecording: true});
-  }
+  Voice.onSpeechStart = () => setRecording(true);
+  Voice.onSpeechResults = (e) => setInputValue(e.value[0]);
 
-  onSpeechResults(e) {
-    const result = e.value[0];
-    this.setState({inputValue: result})
-  }
-
-  handleStartRecording = async () => {
+  const handleStartRecording = async () => {
     await Voice.start('en-US');
   };
 
-  handleStopRecording = async () => {
-    this.setState({isRecording: false});
+  const handleStopRecording = async () => {
+    setRecording(false);
     await Voice.stop();
   };
 
-  render() {
-    const {inputValue, isRecording} = this.state;
-
-    return (
-      <View style={styles.container}>
-        <NeuView pressed style={styles.inputWrapper}>
-          <TextInput
-            autoFocus={false}
-            value={inputValue}
-            style={styles.input}
-            textAlignVertical="top"
-            placeholder="Start recording and dictating..."
-            multiline
-          />
-        </NeuView>
-        <NeuButton style={styles.button}
-          onPress={this.handleStartRecording}
-          onUnpress={this.handleStopRecording}
-        >
-          <Text style={styles.btnLabel}>
+  return (
+    <View style={styles.container}>
+      <NeuView pressed style={styles.inputWrapper}>
+        <TextInput
+          autoFocus={false}
+          value={inputValue}
+          style={styles.input}
+          textAlignVertical="top"
+          placeholder="Start recording and dictating..."
+          multiline
+        />
+      </NeuView>
+      <NeuButton style={styles.button}
+        onPress={handleStartRecording}
+        onUnpress={handleStopRecording}
+      >
+        <Text style={styles.btnLabel}>
           {isRecording ? 'STOP' : 'RECORD'}
         </Text>
       </NeuButton>
     </View>
-    );
-  }
+  )
 }
 
 const styles = StyleSheet.create({
@@ -109,3 +82,5 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
 });
+
+export default App;
