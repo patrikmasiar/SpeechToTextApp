@@ -3,7 +3,7 @@
 
 # SpeechToTextApp - Speech convert to text via mobile app
 
-SpeechToTextApp is testing app using **react-native-voice** library to record and convert speech to text.
+SpeechToTextApp is testing app using [**react-native-voice**](https://github.com/react-native-community/voice) library to record and convert speech to text.
 App is using functional components and react hooks.
 Application interface is designed as [Neumorphism desing](https://neumorphism.io/) using [neumorphism-ui](https://github.com/usamamoinakhter/Neumorphism-ui)
 
