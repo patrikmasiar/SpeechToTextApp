@@ -9,7 +9,7 @@
   "dependencies": {
     "neumorphism-ui": "^1.0.2",
     "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react-native": "0.62.3",
     "react-native-permissions": "^2.0.9",
     "react-native-voice": "^0.3.0"
   },
